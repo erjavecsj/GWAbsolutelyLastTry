@@ -19,6 +19,7 @@
 import info.gridworld.actor.Actor;
 import info.gridworld.actor.Critter;
 import info.gridworld.grid.Location;
+import java.awt.Color;
 
 import java.util.ArrayList;
 
@@ -40,8 +41,19 @@ public class ChameleonCritter extends Critter
             return;
         int r = (int) (Math.random() * n);
 
+
+
         Actor other = actors.get(r);
-        setColor(other.getColor());
+
+        if (other == null) 
+            return;    
+        
+        // setColor(other.getColor());
+        Color c = other.getColor();
+        int red = (int) (c.getRed() * (.95));
+        int green = (int) (c.getGreen() * (.95));
+        int blue = (int) (c.getBlue() * (.95));
+        setColor(new Color(red, green, blue));
     }
 
     /**
