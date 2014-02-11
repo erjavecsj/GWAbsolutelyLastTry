@@ -18,27 +18,29 @@ public class BlusterCritter extends Critter{
 	public ArrayList<Actor> getActors()
 	{
 
-		ArrayList<Actor> critters = new ArrayList<Actors>();
-		Location loc = getLocation;
+		ArrayList<Actor> actors = new ArrayList<Actor>();
+		Location loc = getLocation();
 		for (int r= loc.getRow() - 2; r<= loc.getRow() +2; r++) {
-			for (int z = loc.getCol() -2; r<= loc.getCol +2; z++) {
+			for (int z = loc.getCol() -2; r<= loc.getCol() +2; z++) {
+				Location loc2 = new Location (r,z);
 				if (getGrid().isValid(loc2)) {
-					if (getGrid().get(loc2) instanceof Critter) {
-						c++;
-					}
+					
+					Actor a = getGrid().get(loc2);
+					actors.add(a);
+					
 				}
 			}
 		}
+
+		return actors;
 	    
 	}
 
-	public void processActors(ArrayList<Actor> actors, int c)
+	public void processActors(ArrayList<Actor> actors)
 	{
 	    for (Actor a : actors)
 	    {
-	        if (!(a instanceof Rock) && !(a instanceof Critter))
-	            a.removeSelfFromGrid();
-	        if (c<a.size) {
+	        if (this.c > actors.size()-1) {
 	        	lighten();
 	        } else {
 	        	darken();
@@ -50,17 +52,33 @@ public class BlusterCritter extends Critter{
 
 	public void darken() {
 		Color c = getColor();
-		int red = (int) (c.getRed() * (.95));
-		int green = (int) (c.getGreen() * (.95));
-		int blue = (int) (c.getBlue() * (.95));
+		int red = c.getRed();
+		int green = c.getGreen();
+		int blue = c.getBlue();
+
+		if (red > 0)  red --;
+		
+		if (green > 0) 	green--;
+		
+		if (blue > 0) blue--;
 		setColor(new Color(red, green, blue));
+		
 	}
+
+	
 
 	public void lighten() {
 		Color c = getColor();
-		int red = (int) (c.getRed() * (1.05));
-		int green = (int) (c.getGreen() * (1.05));
-		int blue = (int) (c.getBlue() * (1.05));
+		int red = c.getRed();
+		int green = c.getGreen();
+		int blue = c.getBlue();
+
+		if (red > 255) red ++;
+		
+		if (green > 255) green++;
+		
+		if (blue > 255)	blue++;
+
 		setColor(new Color(red, green, blue));
 	}
 }
